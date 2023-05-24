@@ -1,35 +1,37 @@
 #!/usr/bin/python3
-"""function  returns the perimeter of the island described in grid"""
-    
+'''Calculates the perimeter of the island described in the grid'''
+
+
 def island_perimeter(grid):
-    """
-    grid: is a list of list of integers:
-            0 represents water
-            1 represents land
-    """
-    x = len(grid)
-    y = len(grid[0])
-    if(x==0 or y==0):
-        return 0
-    else:
-        perimeter = 0
-        for i in range(0,x):
-            for j in range(0,y):
-                if(grid[i][j]==1):
-                    if(i-1<0):
-                        perimeter = perimeter+1
-                    elif(grid[i-1][j]==0):
-                        perimeter = perimeter+1
-                    if(i+1==x):
-                        perimeter = perimeter+1
-                    elif(grid[i+1][j]==0):
-                        perimeter = perimeter+1
-                    if(j-1<0):
-                        perimeter = perimeter+1
-                    elif(grid[i][j-1]==0):
-                        perimeter = perimeter+1
-                    if(j+1==y):
-                        perimeter = perimeter+1
-                    elif(grid[i][j+1]==0):
-                        perimeter = perimeter+1
-        return perimeter
+    '''
+    Returns the perimeter of the island described in the grid
+    Args:
+        grid (list of list): A list of lists representing the grid
+    Returns:
+        The perimeter of the island
+    Raises:
+        ValueError: If the grid is empty or not rectangular
+    '''
+    if not grid or not grid[0]:
+        raise ValueError("Grid is empty.")
+
+    rows = len(grid)
+    columns = len(grid[0])
+
+    # Calculate the perimeter
+    perimeter = 0
+
+    for n in range(rows):
+        for m in range(columns):
+            if grid[n][m] == 1:
+                perimeter += 4  # Start with 4 sides
+
+                # Check left cell
+                if m > 0 and grid[n][m - 1] == 1:
+                    perimeter -= 2
+
+                # Check top cell
+                if n > 0 and grid[n - 1][m] == 1:
+                    perimeter -= 2
+
+    return perimeter
